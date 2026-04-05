@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twins Are Birds</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: #000;
+    width: 100%;
+    height: 100%;
+  }
+
+  body {
+    color: #e8e0d4;
+    font-family: 'Josefin Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── Hero: title PNG + flower GIF stacked ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: #000;
+    flex: 1;
+  }
+
+  .hero-stack {
+    position: relative;
+    width: 100%;
+  }
+
+  .masthead-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000;
+  }
+
+  /* Flower sits in the empty black space below the title text.
+     The PNG is portrait; text occupies roughly the top 30%.
+     Flower is centred and positioned at ~38% down. */
+  .flower-img {
+    position: absolute;
+    width: clamp(260px, 44vw, 520px);
+    left: 50%;
+    top: 38%;
+    transform: translateX(-50%);
+    z-index: 2;
+    /* Fade in gently */
+    animation: fadeIn 1.8s ease-out 0.4s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── Enter button ── */
+  .enter-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* Pull it up into the lower black space of the PNG area */
+    position: absolute;
+    bottom: 8%;
+    left: 0;
+    z-index: 10;
+    animation: fadeIn 2.2s ease-out 1s both;
+  }
+
+  .enter-btn {
+    display: inline-block;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: clamp(11px, 1.4vw, 16px);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #e8e0d4;
+    text-decoration: none;
+    border: 1px solid rgba(232, 224, 212, 0.35);
+    padding: 14px 40px;
+    transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+
+  .enter-btn:hover {
+    color: #000;
+    background: #e8e0d4;
+    border-color: #e8e0d4;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-stack">
+    <img class="masthead-img" src="Twins are birds title.png" alt="Twins Are Birds — Anthropology for Strategists">
+    <img class="flower-img" src="IMG_8360.GIF" alt="">
+
+    <div class="enter-wrap">
+      <a class="enter-btn" href="index.html">Enter</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
