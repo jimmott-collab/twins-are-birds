@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twins Are Birds — Anthropology for Strategists</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;600&family=EB+Garamond:ital,wght@0,400;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    color: #e8e0d4;
+    font-family: 'Josefin Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 40px 120px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 80px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 0.2s forwards;
+  }
+
+  .series-title {
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 200;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .series-subtitle {
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(232, 224, 212, 0.35);
+  }
+
+  .series-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(232, 224, 212, 0.15);
+    margin-top: 32px;
+  }
+
+  /* Intro */
+  .intro {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(16px, 2.2vw, 19px);
+    line-height: 1.8;
+    color: rgba(232, 224, 212, 0.55);
+    max-width: 560px;
+    margin-bottom: 80px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 0.6s forwards;
+  }
+
+  /* Issues list */
+  .issues {
+    list-style: none;
+  }
+
+  .issue {
+    opacity: 0;
+    animation: fadeUp 1s ease-out forwards;
+  }
+
+  .issue:nth-child(1) { animation-delay: 0.9s; }
+  .issue:nth-child(2) { animation-delay: 1.1s; }
+  .issue:nth-child(3) { animation-delay: 1.3s; }
+  .issue:nth-child(4) { animation-delay: 1.5s; }
+  .issue:nth-child(5) { animation-delay: 1.7s; }
+  .issue:nth-child(6) { animation-delay: 1.9s; }
+
+  .issue + .issue {
+    margin-top: 2px;
+  }
+
+  .issue a {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    padding: 24px 0;
+    text-decoration: none;
+    color: #e8e0d4;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.4s ease;
+    position: relative;
+  }
+
+  .issue a:hover {
+    padding-left: 12px;
+    border-bottom-color: rgba(255,255,255,0.15);
+  }
+
+  .issue-number {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: rgba(232, 224, 212, 0.25);
+    min-width: 28px;
+    transition: color 0.4s ease;
+  }
+
+  .issue a:hover .issue-number {
+    color: #c4a67a;
+  }
+
+  .issue-info {
+    flex: 1;
+  }
+
+  .issue-title {
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+    transition: color 0.4s ease;
+  }
+
+  .issue a:hover .issue-title {
+    color: #fff;
+  }
+
+  .issue-hook {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(232, 224, 212, 0.35);
+    transition: color 0.4s ease;
+  }
+
+  .issue a:hover .issue-hook {
+    color: rgba(232, 224, 212, 0.55);
+  }
+
+  .issue-thinker {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: rgba(232, 224, 212, 0.2);
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 0.4s ease;
+  }
+
+  .issue a:hover .issue-thinker {
+    color: rgba(196, 166, 122, 0.5);
+  }
+
+  .issue-arrow {
+    font-size: 14px;
+    color: rgba(232, 224, 212, 0.1);
+    transition: all 0.4s ease;
+  }
+
+  .issue a:hover .issue-arrow {
+    color: rgba(232, 224, 212, 0.4);
+    transform: translateX(4px);
+  }
+
+  /* Coming soon */
+  .issue.coming-soon a {
+    pointer-events: none;
+    opacity: 0.35;
+  }
+
+  .coming-tag {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(232, 224, 212, 0.2);
+    margin-left: 12px;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 100px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    opacity: 0;
+    animation: fadeUp 1s ease-out 2s forwards;
+  }
+
+  .footer-text {
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: rgba(232, 224, 212, 0.2);
+    line-height: 2;
+  }
+
+  .footer-text a {
+    color: rgba(232, 224, 212, 0.35);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-text a:hover {
+    color: #c4a67a;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .page { padding: 50px 24px 80px; }
+    .header { margin-bottom: 50px; }
+    .intro { margin-bottom: 50px; }
+    .issue a { flex-wrap: wrap; gap: 8px; padding: 20px 0; }
+    .issue-thinker { width: 100%; margin-left: 48px; margin-top: -4px; }
+    .issue-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header class="header">
+    <h1 class="series-title">Twins Are Birds</h1>
+    <p class="series-subtitle">Anthropology for Strategists</p>
+    <div class="series-line"></div>
+  </header>
+
+  <p class="intro">
+    Each issue pairs a commercial problem with an anthropological thinker. 
+    The move is always the same: take something familiar, run it through 
+    unfamiliar thinking, and see what shakes loose.
+  </p>
+
+  <ul class="issues">
+    <!-- ISSUE 1 -->
+    <li class="issue">
+      <a href="issues/01-merleau-ponty.html">
+        <span class="issue-number">#1</span>
+        <div class="issue-info">
+          <div class="issue-title">Why is Reaching Thinking?</div>
+          <div class="issue-hook">Why do people pay to sit in silence?</div>
+        </div>
+        <span class="issue-thinker">Merleau-Ponty</span>
+        <span class="issue-arrow">&#8594;</span>
+      </a>
+    </li>
+
+    <!-- ISSUE 2 — UPDATE href WHEN READY -->
+    <li class="issue">
+      <a href="issues/02-latour.html">
+        <span class="issue-number">#2</span>
+        <div class="issue-info">
+          <div class="issue-title">Why is Home Printing So Painful?</div>
+          <div class="issue-hook">Technology needs love to work</div>
+        </div>
+        <span class="issue-thinker">Latour</span>
+        <span class="issue-arrow">&#8594;</span>
+      </a>
+    </li>
+
+    <!-- ISSUE 3 — UPDATE href WHEN READY -->
+    <li class="issue">
+      <a href="issues/03-evans-pritchard.html">
+        <span class="issue-number">#3</span>
+        <div class="issue-info">
+          <div class="issue-title">Why Does Nike Own the Streets?</div>
+          <div class="issue-hook">The hidden third</div>
+        </div>
+        <span class="issue-thinker">Evans-Pritchard</span>
+        <span class="issue-arrow">&#8594;</span>
+      </a>
+    </li>
+
+    <!--
+    TO ADD A NEW ISSUE: Copy the block below, uncomment it,
+    update the number, title, hook, thinker, and href.
+
+    <li class="issue">
+      <a href="issues/04-filename.html">
+        <span class="issue-number">#4</span>
+        <div class="issue-info">
+          <div class="issue-title">Issue Title Here</div>
+          <div class="issue-hook">The commercial hook</div>
+        </div>
+        <span class="issue-thinker">Thinker Name</span>
+        <span class="issue-arrow">&#8594;</span>
+      </a>
+    </li>
+    -->
+  </ul>
+
+  <footer class="footer">
+    <div class="footer-text">
+      Jim Mott — Commercial Anthropologist &amp; Cultural Strategist<br>
+      <a href="mailto:jim.mott@jimmottconsulting.com">jim.mott@jimmottconsulting.com</a><br>
+      <a href="https://luckybaboon.substack.com/">Shifting Dullness on Substack</a> · 
+      <a href="https://www.jimmottconsulting.com">jimmottconsulting.com</a>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
