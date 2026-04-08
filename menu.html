@@ -69,7 +69,7 @@
 
   .carousel-item a:hover { opacity: 1; }
 
- .carousel-item img {
+.carousel-item img {
   width: 100%;
   max-width: 490px;
   height: 490px;
@@ -77,9 +77,12 @@
   object-fit: contain;
   display: block;
 
-  border: 1px solid rgba(232, 224, 212, 0.12);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6),
-              0 0 20px rgba(232, 224, 212, 0.06);
+  /* fake inner border */
+  box-shadow: 
+    inset 0 0 0 10px rgba(0, 0, 0, 1),   /* pushes border inward */
+    inset 0 0 0 11px rgba(232, 224, 212, 0.12), /* actual border line */
+    0 8px 30px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(232, 224, 212, 0.06);
 }
 
   .carousel-label {
