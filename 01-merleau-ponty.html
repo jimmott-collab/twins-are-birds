@@ -5,6 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Twins Are Birds</title>
 <style>
+.back-btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+
+  text-decoration: none;
+  color: rgba(232,224,212,0.6);
+  font-size: 18px;
+  font-family: 'Josefin Sans', sans-serif;
+
+  border: 1px solid rgba(232,224,212,0.15);
+  padding: 8px 10px;
+  border-radius: 2px;
+
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+
+  transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+  color: rgba(232,224,212,0.9);
+  border-color: rgba(232,224,212,0.35);
+}
   @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -414,6 +439,7 @@ window.addEventListener("resize", () => {
 })();
 </script>
 </body>
+<a href="menu.html" class="back-btn">&#8592;</a>
 </html>
 git config --global user.email "jim.mott.is.here@gmail.com"
 git config --global user.name "Jim Mott"
