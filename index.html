@@ -260,6 +260,56 @@
   document.getElementById("carouselPrev").addEventListener("click", stepPrev);
   document.getElementById("carouselNext").addEventListener("click", stepNext);
 </script>
+<script>
+(function() {
+  document.querySelectorAll('.carousel-item a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var href = this.href;
+      var item = this.closest('.carousel-item');
+      var rect = item.getBoundingClientRect();
 
+      // Store origin rect for the issue page arrive animation
+      sessionStorage.setItem('tab_origin', JSON.stringify({
+        x: rect.left,
+        y: rect.top,
+        w: rect.width,
+        h: rect.height,
+        vw: window.innerWidth,
+        vh: window.innerHeight
+      }));
+
+      // Create overlay that expands from the item rect to fullscreen
+      var overlay = document.createElement('div');
+      overlay.style.cssText = [
+        'position:fixed',
+        'left:' + rect.left + 'px',
+        'top:' + rect.top + 'px',
+        'width:' + rect.width + 'px',
+        'height:' + rect.height + 'px',
+        'background:#0a0a0a',
+        'z-index:9999',
+        'transition:all 0.5s cubic-bezier(0.7,0,0.3,1)',
+        'pointer-events:none'
+      ].join(';');
+      document.body.appendChild(overlay);
+
+      // Trigger expansion on next frame
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          overlay.style.left = '0';
+          overlay.style.top = '0';
+          overlay.style.width = '100vw';
+          overlay.style.height = '100vh';
+        });
+      });
+
+      setTimeout(function() {
+        window.location.href = href;
+      }, 520);
+    });
+  });
+})();
+</script>
 </body>
 </html>

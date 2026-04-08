@@ -380,5 +380,40 @@ window.addEventListener("resize", () => {
   }
 });
 </script>
+<script>
+(function() {
+  var origin = null;
+  try { origin = JSON.parse(sessionStorage.getItem('tab_origin')); } catch(e) {}
+  if (!origin) return;
+  sessionStorage.removeItem('tab_origin');
+
+  // Overlay starts full-screen (matching end state of index transition)
+  // then fades out to reveal the issue page
+  var overlay = document.createElement('div');
+  overlay.style.cssText = [
+    'position:fixed',
+    'inset:0',
+    'background:#0a0a0a',
+    'z-index:9999',
+    'transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1)',
+    'pointer-events:none'
+  ].join(';');
+  document.body.appendChild(overlay);
+
+  // Wait for page to be ready, then fade the overlay out
+  window.addEventListener('load', function() {
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        overlay.style.opacity = '0';
+        setTimeout(function() {
+          overlay.parentNode && overlay.parentNode.removeChild(overlay);
+        }, 650);
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>
+git config --global user.email "jim.mott.is.here@gmail.com"
+git config --global user.name "Jim Mott"
