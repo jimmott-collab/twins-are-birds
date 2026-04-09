@@ -79,7 +79,7 @@ body {
   width: 100%;
   max-width: 620px;
   height: auto;
-  max-height: 65vh;
+  max-height: 60vh;
   object-fit: contain;
   display: block;
 
@@ -125,11 +125,8 @@ body {
   flex: 1;
   min-height: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  background: #000;
 }
 
 /* UPDATED */
@@ -147,9 +144,9 @@ body {
 .carousel-viewport {
   overflow: hidden;
   flex: 1;
-  min-height: 0;
-  background: #000;
   display: flex;
+  min-height: 0;
+  align-items: center; /* ← add this */
 }
 
 .carousel-btn {
