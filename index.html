@@ -16,22 +16,15 @@ html, body {
 }
 
 body {
-  /* ... */
-  height: 100vh;
-  height: 100dvh;  /* ADD: uses dynamic viewport height, accounts for mobile chrome */
-  /* ... */
+  color: #e8e0d4;
+  font-family: 'Josefin Sans', sans-serif;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: env(safe-area-inset-bottom);
 }
-
-  body {
-    color: #e8e0d4;
-    font-family: 'Josefin Sans', sans-serif;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-  }
-
   /* ── Title ── */
   .masthead-wrap {
     width: 100%;
@@ -108,12 +101,8 @@ body {
 
 @media (max-width: 600px) {
   .masthead-wrap { padding: 16px 0 10px; }
-  .flower-img {
-    max-height: 38dvh;
-  }
-  .enter-wrap {
-    padding-bottom: 3dvh;
-  }
+  .flower-img { max-height: 50dvh; }
+  .enter-wrap { padding-bottom: 1dvh; }
 }
 </style>
 </head>
