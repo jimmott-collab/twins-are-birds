@@ -62,7 +62,8 @@
     align-items: center;
     text-decoration: none;
     color: #e8e0d4;
-    width: clamp(252px, 63vw, 448px);
+    width: min(63vw, 448px);
+    max-width: 90vw;
     transition: opacity 0.3s ease;
     opacity: 0.85;
   }
@@ -72,8 +73,8 @@
 .carousel-item img {
   width: 100%;
   max-width: 490px;
-  height: 490px;
-  max-height: 80vh;
+  height: auto;
+  max-height: 55vh;
   object-fit: contain;
   display: block;
 
