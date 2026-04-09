@@ -119,6 +119,7 @@
 
   /* ── Nav arrows ── */
   .carousel-section {
+    margin-top: -20px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -169,29 +170,12 @@
   }
 
 @media (max-width: 600px) {
-  .masthead-wrap {
-    padding: 16px 0 6px;
-  }
-
-  .carousel-section {
-    justify-content: flex-start;
-    padding-top: 10px; /* key: controls spacing safely */
-  }
-  .carousel-wrapper {
-    max-width: 100%;
-    padding: 0 4px;
-  }
-  .carousel-item a {
-    width: 88%;
-  }
-  .carousel-item img {
-    max-height: 70vh;
-  }
-  .carousel-btn {
-    width: 32px;
-    height: 60px;
-    margin: 0 4px;
-
+  .masthead-wrap { padding: 16px 0 10px; }
+  .carousel-wrapper { max-width: 100%; padding: 0 4px; }
+  .carousel-item a { width: 88%; }
+  .carousel-item img { max-height: 70vh; }
+  .carousel-btn { width: 32px; height: 60px; margin: 0 4px; font-size: 14px; }
+}
 
 <div class="masthead-wrap" id="mastheadWrap">
   <div class="masthead-text">Twins Are Birds</div>
