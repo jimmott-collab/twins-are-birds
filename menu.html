@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Twins Are Birds — Index</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;600&family=Amatic+SC:wght@400;700&display=swap');
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;600&family=Amatic+SC:wght@400;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 /* dvh fix */
 html, body {
@@ -44,22 +45,44 @@ body {
 
 /* ── Carousel ── */
 
+.carousel-section {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 860px;
+  padding: 0 12px;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
 .carousel-track {
   display: flex;
   width: 100%;
+  transition: transform 0.5s ease;
 }
 
 .carousel-item {
   flex: 0 0 100%;
-  width: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #000;
 }
 
-/* UPDATED */
 .carousel-item a {
   display: flex;
   flex-direction: column;
@@ -68,26 +91,24 @@ body {
   color: #e8e0d4;
   width: min(80vw, 620px);
   max-width: 90vw;
+  opacity: 0.9;
   transition: opacity 0.3s ease;
-  opacity: 0.85;
 }
 
 .carousel-item a:hover { opacity: 1; }
 
-/* UPDATED */
 .carousel-item img {
   width: 100%;
   max-width: 620px;
-  height: auto;
   max-height: 60vh;
   object-fit: contain;
   display: block;
 
   box-shadow: 
-    inset 0 0 0 10px rgba(0, 0, 0, 1),
-    inset 0 0 0 11px rgba(232, 224, 212, 0.12),
-    0 8px 30px rgba(0, 0, 0, 0.6),
-    0 0 20px rgba(232, 224, 212, 0.06);
+    inset 0 0 0 10px #000,
+    inset 0 0 0 11px rgba(232,224,212,0.12),
+    0 8px 30px rgba(0,0,0,0.6),
+    0 0 20px rgba(232,224,212,0.06);
 }
 
 .carousel-label {
@@ -97,7 +118,6 @@ body {
 
 .carousel-number {
   font-size: 10px;
-  font-weight: 300;
   letter-spacing: 0.2em;
   color: rgba(232,224,212,0.25);
   display: block;
@@ -106,63 +126,27 @@ body {
 
 .carousel-title {
   font-size: clamp(12px, 1.4vw, 14px);
-  font-weight: 300;
   letter-spacing: 0.06em;
 }
 
 .carousel-thinker {
   font-size: 10px;
-  font-weight: 300;
   letter-spacing: 0.15em;
   color: rgba(232,224,212,0.25);
   text-transform: uppercase;
-  margin-top: 2px;
 }
 
-/* ── Nav arrows ── */
-
-.carousel-section {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* UPDATED */
-.carousel-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 860px;
-  padding: 0 12px;
-  box-sizing: border-box;
-}
-
-.carousel-viewport {
-  overflow: visible;
-  flex: 1;
-  display: flex;
-  min-height: 0;
-  align-items: center; /* ← add this */
-}
-
+/* arrows */
 .carousel-btn {
-  flex-shrink: 0;
   background: none;
   border: 1px solid rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.4);
   width: 44px;
   height: 80px;
-  font-family: 'Josefin Sans', sans-serif;
   font-size: 18px;
   cursor: pointer;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-  -webkit-tap-highlight-color: transparent;
   margin: 0 12px;
+  transition: all 0.3s ease;
 }
 
 .carousel-btn:hover {
@@ -170,30 +154,82 @@ body {
   color: rgba(255,255,255,0.7);
 }
 
-/* UPDATED MOBILE */
+/* mobile */
 @media (max-width: 600px) {
   .masthead-wrap { padding: 16px 0 10px; }
-  .carousel-wrapper { max-width: 100%; padding: 0 4px; }
+  .carousel-wrapper { padding: 0 4px; }
 
   .carousel-item a { width: 88%; }
   .carousel-item img { max-height: 70vh; }
 
-  .carousel-btn { width: 32px; height: 60px; margin: 0 4px; font-size: 14px; }
+  .carousel-btn {
+    width: 32px;
+    height: 60px;
+    font-size: 14px;
+    margin: 0 4px;
+  }
 }
 </style>
 </head>
+
 <body>
 
-<div class="masthead-wrap" id="mastheadWrap">
+<div class="masthead-wrap">
   <div class="masthead-text">Twins Are Birds</div>
 </div>
 
 <div class="carousel-section">
   <div class="carousel-wrapper">
-    <button class="carousel-btn" id="carouselPrev">&#8592;</button>
+    <button class="carousel-btn" id="prev">&#8592;</button>
+
     <div class="carousel-viewport">
-      <div class="carousel-track" id="carouselTrack"></div>
+      <div class="carousel-track" id="track"></div>
     </div>
-    <button class="carousel-btn" id="carouselNext">&#8594;</button>
+
+    <button class="carousel-btn" id="next">&#8594;</button>
   </div>
 </div>
+
+<script>
+const track = document.getElementById("track");
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
+
+const items = [
+  { img: "IMG_8360.GIF", title: "Work One", thinker: "Archive" },
+  { img: "IMG_8360.GIF", title: "Work Two", thinker: "Archive" },
+  { img: "IMG_8360.GIF", title: "Work Three", thinker: "Archive" }
+];
+
+track.innerHTML = items.map((item, i) => `
+  <div class="carousel-item">
+    <a href="#">
+      <img src="${item.img}">
+      <div class="carousel-label">
+        <span class="carousel-number">${String(i+1).padStart(2,'0')}</span>
+        <div class="carousel-title">${item.title}</div>
+        <div class="carousel-thinker">${item.thinker}</div>
+      </div>
+    </a>
+  </div>
+`).join("");
+
+let index = 0;
+
+function update() {
+  track.style.transform = `translateX(-${index * 100}%)`;
+}
+
+next.onclick = () => {
+  index = (index + 1) % items.length;
+  update();
+};
+
+prev.onclick = () => {
+  index = (index - 1 + items.length) % items.length;
+  update();
+};
+</script>
+
+</body>
+</html>
