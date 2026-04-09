@@ -168,16 +168,28 @@
     color: rgba(255,255,255,0.7);
   }
 
-  @media (max-width: 600px) {
-    .masthead-wrap { padding: 16px 0 10px; }
-    .carousel-wrapper { max-width: 100%; padding: 0 4px; }
-    .carousel-item a { width: 88%; }
-    .carousel-item img { max-height : 70vh; }
-    .carousel-btn { width: 32px; height: 60px; margin: 0 4px; font-size: 14px; }
+@media (max-width: 600px) {
+  body {
+    justify-content: flex-start;
   }
-</style>
-</head>
-<body>
+
+  .masthead-wrap {
+    padding: 16px 0 6px;
+  }
+
+  .carousel-section {
+    justify-content: flex-start;
+  }
+
+  .carousel-wrapper {
+    max-width: 100%;
+    padding: 0 4px;
+  }
+
+  .carousel-item a {
+    width: 88%;
+  }
+
 
 <div class="masthead-wrap" id="mastheadWrap">
   <div class="masthead-text">Twins Are Birds</div>
