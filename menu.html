@@ -73,7 +73,26 @@
     width: clamp(252px, 63vw, 448px);
     transition: opacity 0.3s ease;
     opacity: 0.85;
+    position: relative;
   }
+  .carousel-item a::after {
+  content: "";
+  position: absolute;
+
+  width: clamp(252px, 63vw, 448px);
+  height: 490px;
+  max-height: 80vh;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  box-shadow:
+    inset 0 0 0 10px rgba(0, 0, 0, 1),
+    inset 0 0 0 11px rgba(232, 224, 212, 0.12);
+
+  pointer-events: none;
+}
 
   .carousel-item a:hover { opacity: 1; }
 
@@ -85,10 +104,8 @@
   object-fit: contain;
   display: block;
 
-  /* fake inner border */
-  box-shadow: 
-    inset 0 0 0 10px rgba(0, 0, 0, 1),   /* pushes border inward */
-    inset 0 0 0 11px rgba(232, 224, 212, 0.12), /* actual border line */
+  /* outer glow */
+  box-shadow:
     0 8px 30px rgba(0, 0, 0, 0.6),
     0 0 20px rgba(232, 224, 212, 0.06);
 }
