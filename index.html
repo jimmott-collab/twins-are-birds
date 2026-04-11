@@ -9,22 +9,22 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html, body {
-    height: 100%;
-    background: #000;
-    overflow: hidden;
-  }
+html, body {
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+}
 
-  body {
-    color: #e8e0d4;
-    font-family: 'Josefin Sans', sans-serif;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-  }
-
+body {
+  color: #e8e0d4;
+  font-family: 'Josefin Sans', sans-serif;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: env(safe-area-inset-bottom);
+}
   /* ── Title ── */
   .masthead-wrap {
     width: 100%;
@@ -58,7 +58,7 @@
 
   .flower-img {
     max-height: 65vh;
-    max-width: clamp(338px, 57vw, 676px);
+    max-width: min(676px, 90vw);
     width: auto;
     height: auto;
     display: block;
@@ -99,19 +99,11 @@
     to   { opacity: 1; }
   }
 
-  @media (max-width: 600px) {
-    .flower-img {
-      max-width: clamp(240px, 82vw, 480px);
-      max-height: 48vh;
-    }
-    .enter-btn {
-      font-size: 12px;
-      padding: 12px 32px;
-    }
-    .enter-wrap {
-      padding-bottom: 6vh;
-    }
-  }
+@media (max-width: 600px) {
+  .masthead-wrap { padding: 16px 0 10px; }
+  .flower-img { max-height: 50dvh; }
+  .enter-wrap { padding-bottom: 6dvh; }
+}
 </style>
 </head>
 <body>
