@@ -64,38 +64,55 @@
     background: #000;
   }
 
-  .carousel-item a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #e8e0d4;
-    width: clamp(252px, 63vw, 448px);
-    transition: opacity 0.3s ease;
-    opacity: 0.85;
-    position: relative;
-  }
-  .carousel-item a::after {
+ .carousel-item a::after {
   content: "";
   position: absolute;
 
   width: clamp(252px, 63vw, 448px);
-  height: 460px;
-  max-height: 80vh;
+  height: min(490px, 80vh);
 
   left: 50%;
-  top: 50%;
+  top: 53%;
   transform: translate(-50%, -50%);
 
+  /* 🎨 PAPER + LIGHT */
+  background:
+    /* lighting (top → bottom) */
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.06) 0%,
+      rgba(0,0,0,0.18) 100%
+    ),
+
+    /* subtle paper grain */
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.01) 0px,
+      rgba(0,0,0,0.01) 1px,
+      transparent 2px,
+      transparent 3px
+    );
+
+  /* 🧱 FRAME + DEPTH */
   box-shadow:
-    inset 0 0 0 10px rgba(0, 0, 0, 1),
-    inset 0 0 0 11px rgba(232, 224, 212, 0.12);
+    inset 0 0 0 10px rgba(0, 0, 0, 0.95),
+    inset 0 0 0 11px rgba(232, 224, 212, 0.10),
+
+    /* top light */
+    inset 0 12px 20px rgba(255,255,255,0.06),
+
+    /* bottom falloff */
+    inset 0 -20px 30px rgba(0,0,0,0.6),
+
+    /* outer glow */
     0 0 40px rgba(232, 224, 212, 0.1),
     0 0 80px rgba(232, 224, 212, 0.05);
 
+  /* slight imperfection */
+  border-radius: 2px 3px 2px 4px;
+
   pointer-events: none;
 }
-
   .carousel-item a:hover { opacity: 1; }
 
 .carousel-item img {
