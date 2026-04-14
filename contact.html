@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — Twins Are Birds</title>
+<title>Contact — Twins Are Birds</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;600&family=Amatic+SC:wght@400;700&display=swap');
 
@@ -114,18 +114,34 @@
   .masthead-text {
     font-family: 'Amatic SC', sans-serif;
     font-size: clamp(28px, 5vw, 52px);
-    font-weight: 200;
+    font-weight: 400;
     letter-spacing: 0.15em;
     color: #e8e0d4;
     text-transform: uppercase;
     text-align: center;
   }
 
+  /* ── Video ── */
+  .video-wrap {
+    width: 100%;
+    max-width: 200px;
+    margin: 10px auto 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .video-wrap video {
+    width: 100%;
+    height: auto;
+    display: block;
+    mix-blend-mode: lighten;
+  }
+
   /* ── Content ── */
   .content {
     width: 100%;
     max-width: 620px;
-    padding: 40px 32px 80px;
+    padding: 0 32px 80px;
     animation: fadeIn 2.5s ease-out 0.4s both;
   }
 
@@ -142,16 +158,21 @@
     letter-spacing: 0.06em;
     line-height: 1.9;
     color: #e8e0d4;
-    margin-bottom: 2em;
+    margin-bottom: 1.4em;
   }
 
   .body-text p:last-child { margin-bottom: 0; }
 
-  .section-rule {
-    width: 30px;
-    height: 1px;
-    background: rgba(232, 224, 212, 0.25);
-    margin: 40px auto;
+  .body-text a {
+    color: #e8e0d4;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(232, 224, 212, 0.35);
+    transition: text-decoration-color 0.2s;
+  }
+
+  .body-text a:hover {
+    text-decoration-color: #e8e0d4;
   }
 
   @keyframes fadeIn {
@@ -161,7 +182,8 @@
 
   @media (max-width: 600px) {
     .masthead-wrap { padding: 16px 0 10px; }
-    .content { padding: 32px 20px 48px; }
+    .content { padding: 0 20px 48px; }
+    .video-wrap { max-width: 160px; }
   }
 </style>
 </head>
@@ -182,38 +204,43 @@
   <a href="contact.html">Contact</a>
 </nav>
 
+<!-- HEADING -->
 <div class="masthead-wrap">
-  <div class="masthead-text">About Twins Are Birds</div>
+  <div class="masthead-text">Contact</div>
 </div>
 
+<!-- VIDEO -->
+<div class="video-wrap">
+  <video autoplay loop muted playsinline poster="poster_square.jpg">
+    <source src="head_square.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- COPY -->
 <div class="content">
   <div class="divider"></div>
   <div class="body-text">
-    <p>Twins Are Birds is a primer in anthropological thinking as it applies to strategic problems. It is vignettes and cuts from key thinkers and more obscure writers who have useful things to say about what makes humans human.</p>
-
-    <div class="section-rule"></div>
-
-    <p>Anthropology is full of wild ideas hidden behind stories about people making slightly different shaped pots or using the local intranet to sell fish. It deals with everything from why menthol cigarettes are racist to why time is a product of place and scientific progress is a myth.</p>
-
-    <div class="section-rule"></div>
-
-    <p>If what you do involves figuring out what other people are doing — then anthropology should be on your radar and in your reading list.</p>
-
-    <p>Twins Are Birds is a starting point and a way in and an invitation to check out some really fucking cool ways of thinking.</p>
+    <p>My name is Jim Mott. I'm a freelance commercial anthropologist.</p>
+    <p>You can read more of my thinking about culture and ethnographic practice <a href="https://luckybaboon.substack.com/" target="_blank" rel="noopener">here</a>.</p>
+    <p>You can contact me <a href="#" id="mailto-link">here</a>.</p>
   </div>
 </div>
 
 <script>
+(function() {
+  var u = ['j','i','m','.','m','o','t','t','.','i','s','.','h','e','r','e','@','g','m','a','i','l','.','c','o','m'];
+  document.getElementById('mailto-link').href = 'mailto:' + u.join('');
+})();
+
 const hamburgerBtn = document.getElementById('hamburgerBtn');
-const navDrawer = document.getElementById('navDrawer');
-const navOverlay = document.getElementById('navOverlay');
+const navDrawer    = document.getElementById('navDrawer');
+const navOverlay   = document.getElementById('navOverlay');
 
 function openMenu() {
   hamburgerBtn.classList.add('open');
   navDrawer.classList.add('open');
   navOverlay.classList.add('open');
 }
-
 function closeMenu() {
   hamburgerBtn.classList.remove('open');
   navDrawer.classList.remove('open');
@@ -224,13 +251,10 @@ hamburgerBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   navDrawer.classList.contains('open') ? closeMenu() : openMenu();
 });
-
 navOverlay.addEventListener('click', closeMenu);
-
 navDrawer.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', closeMenu);
 });
-
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeMenu();
 });
