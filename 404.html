@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Twins Are Birds</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;600&family=Amatic+SC:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    background: #000;
+  }
+
+  body {
+    color: #e8e0d4;
+    font-family: 'Josefin Sans', sans-serif;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .error-text {
+    font-family: 'Amatic SC', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 200;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: center;
+    animation: fadeIn 2.5s ease-out 0.4s both;
+  }
+
+  .return-btn {
+    display: inline-block;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: clamp(11px, 1.2vw, 15px);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #e8e0d4;
+    text-decoration: none;
+    border: 1px solid rgba(232, 224, 212, 0.35);
+    padding: 12px 36px;
+    transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    animation: fadeIn 3.2s ease-out 1s both;
+  }
+
+  .return-btn:hover {
+    color: #000;
+    background: #e8e0d4;
+    border-color: #e8e0d4;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="error-text">Liminal pollution.</div>
+  <a class="return-btn" href="index.html">Return home</a>
+
+</body>
+</html>
