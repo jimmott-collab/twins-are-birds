@@ -66,9 +66,14 @@
     animation: fadeIn 4s ease-out 2s both;
     opacity: 0.7;
     transition: opacity 0.3s ease;
+    width: min(280px, 90vw);
   }
   .spotify-wrap:hover {
     opacity: 1;
+  }
+  .spotify-wrap iframe {
+    width: 100%;
+    display: block;
   }
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -82,8 +87,7 @@
   <div class="spotify-wrap">
     <iframe
       src="https://open.spotify.com/embed/playlist/5ftQ0Qm0qGfs3PNT7sELCr?utm_source=generator&theme=0"
-      width="280"
-      height="80"
+      height="152"
       frameborder="0"
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
       loading="lazy">
