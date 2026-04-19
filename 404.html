@@ -8,14 +8,11 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;600&family=Amatic+SC:wght@400;700&display=swap');
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html, body {
     height: 100%;
     background: #000;
   }
-
   body {
     color: #e8e0d4;
     font-family: 'Josefin Sans', sans-serif;
@@ -26,7 +23,6 @@
     justify-content: center;
     gap: 40px;
   }
-
   .error-text {
     font-family: 'Amatic SC', sans-serif;
     font-size: clamp(28px, 5vw, 52px);
@@ -36,7 +32,17 @@
     text-align: center;
     animation: fadeIn 2.5s ease-out 0.4s both;
   }
-
+  .body-copy {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: clamp(11px, 1.2vw, 14px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: center;
+    color: rgba(232, 224, 212, 0.6);
+    line-height: 2;
+    animation: fadeIn 3s ease-out 0.8s both;
+  }
   .return-btn {
     display: inline-block;
     font-family: 'Josefin Sans', sans-serif;
@@ -51,13 +57,19 @@
     transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
     animation: fadeIn 3.2s ease-out 1s both;
   }
-
   .return-btn:hover {
     color: #000;
     background: #e8e0d4;
     border-color: #e8e0d4;
   }
-
+  .spotify-wrap {
+    animation: fadeIn 4s ease-out 2s both;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+  .spotify-wrap:hover {
+    opacity: 1;
+  }
   @keyframes fadeIn {
     from { opacity: 0; }
     to   { opacity: 1; }
@@ -65,9 +77,18 @@
 </style>
 </head>
 <body>
-
-  <div class="error-text">Here Be Dragons.</div>
+  <div class="error-text">Waiting Room.</div>
+  <p class="body-copy">Content still in production.<br>Please come back later.<br>Or if you prefer to wait — here are some tunes.</p>
+  <div class="spotify-wrap">
+    <iframe
+      src="https://open.spotify.com/embed/playlist/5ftQ0Qm0qGfs3PNT7sELCr?utm_source=generator&theme=0"
+      width="280"
+      height="80"
+      frameborder="0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+  </div>
   <a class="return-btn" href="index.html">Return home</a>
-
 </body>
 </html>
