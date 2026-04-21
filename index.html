@@ -31,22 +31,23 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html, body {
-  height: 100%;
-  background: #000;
-  overflow: hidden;
-}
+  html, body {
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+  }
 
-body {
-  color: #e8e0d4;
-  font-family: 'Josefin Sans', sans-serif;
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: env(safe-area-inset-bottom);
-}
+  body {
+    color: #e8e0d4;
+    font-family: 'Josefin Sans', sans-serif;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
   /* ── Title ── */
   .masthead-wrap {
     width: 100%;
@@ -55,6 +56,7 @@ body {
     align-items: center;
     flex-shrink: 0;
     padding: 40px 0 20px;
+    position: relative;
   }
 
   .masthead-text {
@@ -65,7 +67,30 @@ body {
     color: #e8e0d4;
     text-transform: uppercase;
     text-align: center;
+    position: relative;
+    z-index: 1;
   }
+
+  /* RGB ghost layers — positioned, toggled by JS */
+  .masthead-ghost {
+    font-family: 'Amatic SC', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 200;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: center;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .masthead-ghost.red { color: rgba(255,40,70,0.85); }
+  .masthead-ghost.blue { color: rgba(40,110,255,0.75); }
 
   /* ── Flower ── */
   .flower-wrap {
@@ -121,26 +146,216 @@ body {
     to   { opacity: 1; }
   }
 
-@media (max-width: 600px) {
-  .masthead-wrap { padding: 16px 0 10px; }
-  .flower-img { max-height: 50dvh; }
-  .enter-wrap { padding-bottom: 6dvh; }
-}
+  @media (max-width: 600px) {
+    .masthead-wrap { padding: 16px 0 10px; }
+    .flower-img { max-height: 50dvh; }
+    .enter-wrap { padding-bottom: 6dvh; }
+  }
+
+  /* ── glitchcore overlays ── */
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 3px,
+      rgba(0,0,0,0.18) 3px,
+      rgba(0,0,0,0.18) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  #noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 101;
+    opacity: 0.06;
+  }
+
+  /* VHS bar — JS moves it */
+  .vhs-bar {
+    position: fixed;
+    left: 0; right: 0;
+    height: 18px;
+    background: rgba(255,255,255,0.04);
+    z-index: 102;
+    pointer-events: none;
+    top: -40px;
+    opacity: 0;
+    transition: opacity 0.1s;
+  }
 </style>
 </head>
 <body>
 
+  <!-- glitchcore overlays -->
+  <div class="scanlines"></div>
+  <canvas id="noise"></canvas>
+  <div class="vhs-bar" id="vhsBar"></div>
+
   <div class="masthead-wrap" id="mastheadWrap">
+    <div class="masthead-ghost red"  id="ghostRed">Twins Are Birds</div>
+    <div class="masthead-ghost blue" id="ghostBlue">Twins Are Birds</div>
     <div class="masthead-text">Twins Are Birds</div>
   </div>
 
   <div class="flower-wrap">
-    <img class="flower-img" src="IMG_8360.GIF" alt="Animated flower collage">
+    <img class="flower-img" id="flowerImg" src="IMG_8360.GIF" alt="Animated flower collage">
   </div>
 
   <div class="enter-wrap">
-    <a class="enter-btn" href="menu.html">Enter</a>
+    <a class="enter-btn" id="enterBtn" href="menu.html">Enter</a>
   </div>
+
+<script>
+(function(){
+
+  /* ── util ── */
+  const rand = (min, max) => Math.random() * (max - min) + min;
+  const randInt = (min, max) => Math.floor(rand(min, max));
+
+  /* ── noise grain ── */
+  const canvas = document.getElementById('noise');
+  const ctx = canvas.getContext('2d');
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  function drawNoise(){
+    const w = canvas.width, h = canvas.height;
+    const img = ctx.createImageData(w, h);
+    const d = img.data;
+    for(let i = 0; i < d.length; i += 4){
+      const v = Math.random() * 255;
+      d[i] = d[i+1] = d[i+2] = v;
+      d[i+3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    requestAnimationFrame(drawNoise);
+  }
+  drawNoise();
+
+  /* ── VHS bar ── randomly sweeps, random speed, random gap ── */
+  const vhsBar = document.getElementById('vhsBar');
+  function runVhs(){
+    const duration = rand(6000, 16000);   /* sweep duration */
+    const gap      = rand(4000, 20000);   /* wait before next */
+    const startTop = -40;
+    const endTop   = window.innerHeight + 40;
+    let start = null;
+
+    vhsBar.style.opacity = '1';
+
+    function sweep(ts){
+      if(!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      vhsBar.style.top = (startTop + (endTop - startTop) * progress) + 'px';
+      if(progress < 1){
+        requestAnimationFrame(sweep);
+      } else {
+        vhsBar.style.opacity = '0';
+        setTimeout(runVhs, gap);
+      }
+    }
+    requestAnimationFrame(sweep);
+  }
+  setTimeout(runVhs, rand(1000, 5000));
+
+  /* ── RGB title split ── random clip, offset, opacity each time ── */
+  const ghostRed  = document.getElementById('ghostRed');
+  const ghostBlue = document.getElementById('ghostBlue');
+
+  function glitchTitle(){
+    /* pick random clip slices */
+    const topR    = randInt(5, 50);
+    const bottomR = randInt(5, 50);
+    const topB    = randInt(5, 50);
+    const bottomB = randInt(5, 50);
+    const dxR = rand(-8, 8);
+    const dxB = rand(-8, 8);
+    const opR = rand(0.4, 0.85);
+    const opB = rand(0.3, 0.75);
+    const flickerCount = randInt(2, 5);
+    let f = 0;
+
+    function flicker(){
+      if(f >= flickerCount){
+        ghostRed.style.opacity  = '0';
+        ghostBlue.style.opacity = '0';
+        ghostRed.style.transform  = 'none';
+        ghostBlue.style.transform = 'none';
+        ghostRed.style.clipPath   = 'none';
+        ghostBlue.style.clipPath  = 'none';
+        /* schedule next glitch — random gap 3–12s */
+        setTimeout(glitchTitle, rand(3000, 12000));
+        return;
+      }
+      /* alternate between showing and hiding for flicker */
+      const on = f % 2 === 0;
+      ghostRed.style.opacity    = on ? opR : '0';
+      ghostBlue.style.opacity   = on ? opB : '0';
+      ghostRed.style.transform  = on ? `translateX(${dxR}px)` : 'none';
+      ghostBlue.style.transform = on ? `translateX(${dxB}px)` : 'none';
+      ghostRed.style.clipPath   = on ? `inset(${topR}% 0 ${bottomR}% 0)` : 'none';
+      ghostBlue.style.clipPath  = on ? `inset(${topB}% 0 ${bottomB}% 0)` : 'none';
+      f++;
+      setTimeout(flicker, rand(40, 140));
+    }
+    flicker();
+  }
+  setTimeout(glitchTitle, rand(2000, 6000));
+
+  /* ── flower slice tears ── random slices, displacement, hue each time ── */
+  const flower = document.getElementById('flowerImg');
+
+  function glitchFlower(){
+    const sliceCount = randInt(2, 5);
+    let s = 0;
+
+    function nextSlice(){
+      if(s >= sliceCount){
+        flower.style.transform  = 'none';
+        flower.style.clipPath   = 'none';
+        flower.style.filter     = 'none';
+        setTimeout(glitchFlower, rand(4000, 14000));
+        return;
+      }
+      const top    = randInt(5, 75);
+      const bottom = randInt(5, 75 - top > 5 ? 75 - top : 10);
+      const dx     = rand(-14, 14);
+      const hue    = rand(-25, 25);
+      flower.style.clipPath  = `inset(${top}% 0 ${bottom}% 0)`;
+      flower.style.transform = `translateX(${dx}px)`;
+      flower.style.filter    = `hue-rotate(${hue}deg)`;
+      s++;
+      setTimeout(nextSlice, rand(40, 100));
+    }
+    nextSlice();
+  }
+  setTimeout(glitchFlower, rand(3000, 8000));
+
+  /* ── button char corruption ── */
+  const btn = document.getElementById('enterBtn');
+  const btnLabels = ['3NT3R','EN▒ER','∃NTER','E̴N̴T̴E̴R̴','EN​TER','3NT3R','ENT​ER'];
+
+  function glitchBtn(){
+    btn.textContent = btnLabels[randInt(0, btnLabels.length)];
+    const flashDuration = rand(80, 200);
+    setTimeout(function(){
+      btn.textContent = 'Enter';
+      /* next corruption — random gap 1.5–8s */
+      setTimeout(glitchBtn, rand(1500, 8000));
+    }, flashDuration);
+  }
+  setTimeout(glitchBtn, rand(2000, 6000));
+
+})();
+</script>
 
 </body>
 </html>
