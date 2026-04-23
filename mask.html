@@ -2,15 +2,27 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Twins Are Birds</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;background:#0a0a0a;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+#cv-wrap{position:relative;display:inline-block;}
 canvas{display:block;}
+#sound-btn{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  background:none;border:none;
+  color:rgba(255,255,255,0.3);font-family:sans-serif;font-size:11px;
+  letter-spacing:0.15em;padding:12px 20px;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:opacity 1.5s;z-index:100;
+  touch-action:manipulation;
+}
 </style>
 </head>
 <body>
-<div id="cv-wrap" style="position:relative;display:inline-block;"><canvas id="gc"></canvas><canvas id="fc" style="position:absolute;top:0;left:0;pointer-events:none;mix-blend-mode:color-burn;z-index:10;"></canvas></div>
+<div id="cv-wrap"><canvas id="gc"></canvas><canvas id="fc" style="position:absolute;top:0;left:0;pointer-events:none;mix-blend-mode:color-burn;z-index:10;"></canvas></div>
+<button id="sound-btn">sound</button>
 <script>
 (function(){
 const W=480,H=480,bs=13;
@@ -18,6 +30,24 @@ const BG_R=10,BG_G=10,BG_B=10;
 const canvas=document.getElementById('gc');
 canvas.width=W;canvas.height=H;
 const ctx=canvas.getContext('2d');
+
+// Scale canvas to fill available screen while preserving aspect ratio
+function resizeCanvas(){
+  const vw=window.innerWidth;
+  const vh=window.innerHeight;
+  const scale=Math.min(vw/W,(vh*0.88)/H); // leave room for button
+  const wrap=document.getElementById('cv-wrap');
+  wrap.style.width=(W*scale)+'px';
+  wrap.style.height=(H*scale)+'px';
+  canvas.style.width='100%';
+  canvas.style.height='100%';
+  document.getElementById('fc').style.width='100%';
+  document.getElementById('fc').style.height='100%';
+}
+resizeCanvas();
+// Re-run after layout settles on mobile
+setTimeout(resizeCanvas,100);
+window.addEventListener('resize',resizeCanvas);
 
 const DOM=0.40,GLITCH=0.43,SPEED=10;
 
@@ -364,7 +394,7 @@ function updateState(dt,elapsed){
       if(Math.random()<churn*dt*0.3){
         // Only add valid mask contestants, not any random mask
         const valid=blockValidMasks[i];
-        if(valid.length>1){
+        if(valid.length > 1) {
           const ch=valid[Math.floor(Math.random()*valid.length)];
           if(!blockContestants[i].includes(ch)){blockContestants[i].push(ch);if(blockContestants[i].length>4)blockContestants[i].shift();}
         }
@@ -659,21 +689,30 @@ document.addEventListener('keydown',e=>{
     setTimeout(tick, 400);
   }
 
-  // Subtle prompt
-  const hint = document.createElement('div');
-  hint.style.cssText='position:fixed;bottom:16px;left:50%;transform:translateX(-50%);color:#2a2a2a;font-family:sans-serif;font-size:11px;letter-spacing:0.14em;pointer-events:none;transition:opacity 1.5s;';
-  hint.textContent='click to enable sound';
-  document.body.appendChild(hint);
+  // Wire the sound button as a toggle
+  const btn=document.getElementById('sound-btn');
 
-  function boot(){
-    document.removeEventListener('click',boot);
-    document.removeEventListener('keydown',boot);
-    hint.style.opacity='0'; setTimeout(()=>hint.remove(),1600);
-    function waitForMask(){ window.countSettled ? decodeAll() : setTimeout(waitForMask,200); }
-    waitForMask();
+  function handleToggle(e){
+    if(e&&e.type==='touchend') e.preventDefault();
+    if(!ready){
+      // First tap — boot audio engine
+      btn.textContent='sound off';
+      function waitForMask(){ window.countSettled ? decodeAll() : setTimeout(waitForMask,200); }
+      waitForMask();
+    } else if(masterGain){
+      // Already booted — toggle mute
+      if(masterGain.gain.value>0.01){
+        masterGain.gain.setTargetAtTime(0, ac.currentTime, 0.1);
+        btn.textContent='sound';
+      } else {
+        masterGain.gain.setTargetAtTime(0.75, ac.currentTime, 0.2);
+        btn.textContent='sound off';
+      }
+    }
   }
-  document.addEventListener('click',boot);
-  document.addEventListener('keydown',boot);
+
+  btn.addEventListener('click', handleToggle);
+  btn.addEventListener('touchend', handleToggle, {passive:false});
 
   // Contagion audio hooks — run everything down to silence except drone
   window.onContagion = function(){
