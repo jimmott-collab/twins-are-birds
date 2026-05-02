@@ -258,99 +258,9 @@
     text-transform: uppercase;
     margin-bottom: 24px;
   }
-
-  /* ===== HAMBURGER MENU ===== */
-  .hamburger-btn {
-    position: fixed;
-    top: 18px;
-    right: 20px;
-    z-index: 1000;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .hamburger-btn span {
-    display: block;
-    width: 22px;
-    height: 1px;
-    background: rgba(255,255,255,0.45);
-    transition: all 0.3s ease;
-    transform-origin: center;
-  }
-  .hamburger-btn:hover span { background: rgba(255,255,255,0.75); }
-  .hamburger-btn.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  .hamburger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  .hamburger-btn.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-  .nav-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(10,10,10,0.0);
-    z-index: 998;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-  .nav-overlay.open { opacity: 1; pointer-events: all; }
-  .nav-drawer {
-    position: fixed;
-    top: 0; right: 0;
-    width: 220px; height: 100%;
-    background: #0a0a0a;
-    border-left: 1px solid rgba(255,255,255,0.07);
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 40px 36px;
-    transform: translateX(100%);
-    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  .nav-drawer.open { transform: translateX(0); }
-  .nav-drawer a {
-    display: block;
-    font-family: 'Josefin Sans', sans-serif;
-    font-weight: 300;
-    font-size: 13px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
-    text-decoration: none;
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    transition: color 0.2s ease;
-  }
-  .nav-drawer a:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
-  .nav-drawer a:hover { color: rgba(255,255,255,0.8); }
-  .nav-drawer .nav-label {
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    color: rgba(255,255,255,0.15);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
 </style>
 </head>
 <body>
-<!-- HAMBURGER MENU -->
-<button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-<div class="nav-overlay" id="navOverlay"></div>
-<nav class="nav-drawer" id="navDrawer">
-  <p class="nav-label">Twins Are Birds</p>
-  <a href="index.html">Home</a>
-  <a href="menu.html">Menu</a>
-  <a href="about.html">About</a>
-  <a href="contact.html">Contact</a>
-</nav>
-
 
 <!-- HAMBURGER MENU -->
 <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
@@ -588,39 +498,6 @@ navDrawer.querySelectorAll('a').forEach(link => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeMenu();
 });
-
-// ===== HAMBURGER MENU =====
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const navDrawer = document.getElementById('navDrawer');
-const navOverlay = document.getElementById('navOverlay');
-
-function openMenu() {
-  hamburgerBtn.classList.add('open');
-  navDrawer.classList.add('open');
-  navOverlay.classList.add('open');
-}
-
-function closeMenu() {
-  hamburgerBtn.classList.remove('open');
-  navDrawer.classList.remove('open');
-  navOverlay.classList.remove('open');
-}
-
-hamburgerBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  navDrawer.classList.contains('open') ? closeMenu() : openMenu();
-});
-
-navOverlay.addEventListener('click', closeMenu);
-
-navDrawer.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', closeMenu);
-});
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeMenu();
-});
-
 </script>
 </body>
 </html>
